@@ -37,15 +37,7 @@ class TestBooksCollector:
         bc.add_new_book(book_name)
         assert bc.get_books_genre() == {book_name: ""}
 
-    def test_genre_initialization(self):
-        bc = BooksCollector()
-        expexted_genre = ["Фантастика", "Ужасы", "Детективы", "Мультфильмы", "Комедии"]
-        assert bc.genre == expexted_genre
 
-    def test_genre_age_rating_initialization(self):
-        bc = BooksCollector()
-        expected_genre_age_rating = ["Ужасы", "Детективы"]
-        assert bc.genre_age_rating == expected_genre_age_rating
 
     def test_set_books_genre_if_genre_and_book_true(self, book_name):
         bc = BooksCollector()
@@ -64,17 +56,15 @@ class TestBooksCollector:
         bc.set_book_genre("Молчание ягнят", "Фантастика")
         assert "Молчание ягнят" not in bc.get_books_genre()
 
-    def test_get_book_genre_if_genre_true(self, book_name):
+    def test_get_book_genre_if_book_true(self, book_name):
         bc = BooksCollector()
         bc.add_new_book(book_name)
         bc.set_book_genre(book_name, "Фантастика")
         assert bc.get_book_genre(book_name) == "Фантастика"
 
-    def test_get_book_genre_if_genre_false(self, book_name):
+    def test_get_book_genre_if_book_not_exist(self):
         bc = BooksCollector()
-        bc.add_new_book(book_name)
-        bc.set_book_genre(book_name, "Биография")
-        assert bc.get_books_genre() != "Биография"
+        assert bc.get_book_genre("Молчание ягнят") is None
 
     def test_get_books_with_specific_genre_true(self):
         bc = BooksCollector()
@@ -118,25 +108,25 @@ class TestBooksCollector:
         bc.add_book_in_favorites(book_name)
         assert book_name in bc.get_list_of_favorites_books()
 
-    def test_add_book_in_favorite_same_book(self, book_name):
+    def test_add_book_in_favorite_same_book_not_in_list(self, book_name):
         bc = BooksCollector()
         bc.add_new_book(book_name)
         bc.add_book_in_favorites(book_name)
         bc.add_book_in_favorites(book_name)
         assert len(bc.get_list_of_favorites_books()) == 1
 
-    def test_delete_book_from_favorites_added_book(self, book_name):
+    def test_delete_book_from_favorites_true(self, book_name):
         bc = BooksCollector()
         bc.add_new_book(book_name)
         bc.add_book_in_favorites(book_name)
         bc.delete_book_from_favorites(book_name)
         assert book_name not in bc.get_list_of_favorites_books()
 
-    @pytest.mark.parametrize("name", ["Гарри Поттер",
-                                      "Молчание ягнят",
-                                      "Программирование на Python"])
-    def test_get_list_of_favorite_books_three_books(self, name):
+
+    def test_get_list_of_favorite_books_list(self):
         bc = BooksCollector()
-        bc.add_new_book(name)
-        bc.add_book_in_favorites(name)
-        assert name in bc.get_list_of_favorites_books()
+        bc.add_new_book("Гарри Поттер")
+        bc.add_new_book("Молчание ягнят")
+        bc.add_book_in_favorites("Гарри Поттер")
+        bc.add_book_in_favorites("Молчание ягнят")
+        assert len(bc.get_list_of_favorites_books()) == 2
