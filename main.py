@@ -33,7 +33,7 @@ class BooksCollector:
     def get_books_genre(self):
         return self.books_genre
 
-    # возвращаем книги, подходящие детям
+
     def get_books_for_children(self):
         books_for_children = []
         for name, genre in self.books_genre.items():
