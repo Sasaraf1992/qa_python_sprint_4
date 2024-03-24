@@ -11,7 +11,7 @@ class BooksCollector:
         if not self.books_genre.get(name) and 0 < len(name) < 41:
             self.books_genre[name] = ''
 
-    # устанавливаем книге жанр
+
     def set_book_genre(self, name, genre):
         if name in self.books_genre and genre in self.genre:
             self.books_genre[name] = genre
